@@ -4,34 +4,43 @@ CREATE DATABASE ecommerce;
 
 use ecommerce;
 
--- Criar tabela cliente 1
+
+
+-- Criar tabela clientes 1
 
 CREATE table clients(
 	idClient int auto_increment primary key,
-    Fname varchar(10),
+    Fname varchar(50),
     Minit char(3),
-    Lname varchar(20),
-    CPF char(11) not null,
-    Address varchar(30),
-    constraint unique_cpf_client unique (CPF)
+    Lname varchar(50),
+    clientType enum('PF', 'PJ') not null,
+    CPF char(11),
+    CNPJ char(15),
+    Address varchar(255),
+    constraint unique_cpf_cnpj unique (CPF, CNPJ)
 );
 
 alter table clients auto_increment=1;
 
+
 -- Criar tabela produto 2
+
+
 
 CREATE table product(
 	idProduct int auto_increment primary key,
-    Pname varchar(10) not null,
+    Pname varchar(50) not null,
     classification_kids bool default false,
-    category enum('Eletrônico', 'Vestimneta', 'Brinquedos', 'Alimentos', 'Móveis') not null,
+    category enum('Eletrônico', 'Vestimenta', 'Brinquedos', 'Alimentos', 'Móveis') not null,
     avaliação float default 0,
     size varchar(10)
 );
 
-alter table product auto_increment=1;
+
 
 -- Criar tabela pagamentos 3
+
+
 
 CREATE table payments(
 	idClient int,
@@ -44,6 +53,8 @@ CREATE table payments(
 
 -- Criar tabela pedidos 4
 
+
+
 CREATE table orders(
 	idOrders int auto_increment primary key,
     idOrderClient int,
@@ -54,10 +65,11 @@ CREATE table orders(
     constraint fk_orders_client foreign key(idOrderClient) references clients(idClient)  
 );
 
-alter table orders auto_increment=1;
 
 
--- Criar tabela product order 5 (tabela inserida posteriormente, atenção)
+
+-- Criar tabela product order 5
+
 
 CREATE table productOrder(
 	idPOproduct int,
@@ -74,15 +86,19 @@ CREATE table productOrder(
 
 -- Criar tabela estoque 6
 
+
+
 CREATE 	table productStorage(
 	idProdStorage int auto_increment primary key,
     storageLocation varchar(255),
     quantity int default 0
 );
 
-alter table productStorage auto_increment=1;
+
 
 -- Criar tabela fornecedor 7
+
+
 
 CREATE table supplier(
 	idSupplier int auto_increment primary key,
@@ -92,9 +108,11 @@ CREATE table supplier(
     constraint unique_supplier unique (CNPJ)
 );
 
-alter table supplier auto_increment=1;
+
 
 -- Criar tabela vendedor 8
+
+
 
 CREATE table seller(
 	idSeller int auto_increment primary key,
@@ -108,9 +126,11 @@ CREATE table seller(
 	constraint unique_cpf_seller unique (CPF)
 );
 
-alter table seller auto_increment=1;
 
--- Criar tabela Product Seller 9
+
+-- Criar tabela product seller 9
+
+
 
 CREATE table productSeller(
 	idPseller int,
@@ -121,7 +141,10 @@ CREATE table productSeller(
     constraint fk_productorder_product foreign key (idPproduct) references product(idProduct)
 );
 
--- Criar tabela Storage Location 10
+
+-- Criar tabela storage location 10
+
+
 
 CREATE table storageLocation(
 	idLproduct int,
@@ -132,7 +155,10 @@ CREATE table storageLocation(
     constraint fk_storage_location_storage foreign key (idLstorage) references productStorage(idProdStorage)
 );
 
--- Criar tabela Product Supplier 11
+
+
+-- Criar tabela product supplier 11
+
 
 CREATE table productSupplier(
 	idPsSupplier int,
@@ -142,4 +168,21 @@ CREATE table productSupplier(
     constraint fk_product_supplier_supplier foreign key (idPsSupplier) references supplier(idSupplier),
     constraint fk_product_supplier_product foreign key (idPsProduct) references product(idProduct) 
 );
+
+
+-- Criar tabela entrega 12
+
+
+CREATE table delivery(
+	idDproduct int,
+	idDorder int,
+	deQuantity int not null,
+	deStatus enum('Aguardando pagamento', 'Enviado', 'Entreguei') default 'Aguardando pagamento',
+	trackingCode char(10),
+	primary key (idDproduct, idDorder),
+    constraint fk_productorder_product_delivery foreign key (idDproduct) references product(idProduct),
+    constraint fk_productorder_order_delivery foreign key (idDorder) references orders(idOrderClient)
+
+);
+
 

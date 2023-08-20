@@ -11,12 +11,18 @@ insert into Clients (Fname, Minit, Lname, CPF, Address) values
 	('Isabela', 'M', 'Cruz', 654789123, 'R. Almeda das Flores 28 - RJ');
 	
 
+-- idClient, Fname, Minit, Lname, CNPJ, Address (ok)
+
+insert into Clients (Fname, Minit, Lname, clientType, CNPJ, Address) values
+	('Loja do Daniel', 'M', 'Monteiro', 'PJ' , 097608680901741, 'R. Conde de Bonfim 10 - RJ');
+	
+
 -- idProduct, Pname, classification_kids, category, avaliação, size (ok)
 
 insert into product (Pname, classification_kids, category, avaliação, size) values
 	('Fone', False, 'Eletrônico', 4, null),
 	('Barbie', True, 'Brinquedos', 3, null),
-	('Body', True, 'Vestimneta', 5, null),
+	('Body', True, 'Vestimenta', 5, null),
 	('Microfone', False, 'Eletrônico', 4, null),
 	('Sofá', False, 'Móveis', 3, '3x57x80'),
 	('Farinha', False, 'Alimentos', 2, null),
