@@ -22,3 +22,8 @@ O projeto deverá ser adicionado a um repositório do Github para futura avalia�
 ##### Pagamento – Pode ter cadastrado mais de uma forma de pagamento;
 ##### Entrega – Possui status e código de rastreio.
 
+### DESAFIO 2:
+
+Descrição do Desafio:
+
+Criação de um banco de dados para uma oficina mecânica. Após a criação do banco de dados, realize a persistência de dados para realização de testes. Depois, faça consultas no banco de dados.
