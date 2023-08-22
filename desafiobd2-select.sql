@@ -27,3 +27,16 @@ SELECT c.Nome
 FROM Clientes c
 JOIN OrdemServiço os ON c.idCliente = os.idOSC
 WHERE os.PreçoTotal > 100.00;
+
+-- Defina ordenações dos dados com ORDER BY
+
+SELECT idCliente FROM Clientes ORDER BY idCliente DESC; 
+	
+
+-- Condições de filtros aos grupos – HAVING Statement
+
+SELECT c.Nome, SUM(os.PreçoTotal) AS TotalGasto
+FROM Clientes c
+JOIN OrdemServiço os ON c.idCliente = os.idOSC
+GROUP BY c.Nome HAVING SUM(os.PreçoTotal) > 100.00;
+
